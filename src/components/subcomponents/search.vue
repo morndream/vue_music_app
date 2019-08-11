@@ -6,7 +6,14 @@
         </div>
 
         <mt-tab-container v-model="tab"> 
-            <mt-tab-container-item id="tab1"> <ul class="searchList"><li @click="getSongUrl" :data-a="i" v-for="(item,i) of list" :key="i"><div class="art_first">{{i}}--{{item.name}}</div><div class="art_grey_font">{{item.artists[0].name}}</div></li></ul> </mt-tab-container-item> 
+            <mt-tab-container-item id="tab1"> 
+                <ul class="searchList">
+                    <li @click="getSongUrl(i)" :data-a="i" v-for="(item,i) of list" :key="i">
+                        <div class="art_first">{{i}}--{{item.name}}</div>
+                        <div class="art_grey_font">{{item.artists[0].name}}</div>
+                    </li>
+                </ul> 
+            </mt-tab-container-item> 
             <mt-tab-container-item id="tab2"> <span class="hot" v-for="(item,i) of hots" :key="i">{{item.first}}</span> </mt-tab-container-item> 
         </mt-tab-container>
     </div>
@@ -31,37 +38,25 @@
             fn(){
                 this.ScContent="";
                 this.$emit("emi",this.fnT_f);
-                // console.log(this.list);
-                
-                
+                // console.log(this.list); 
             },
-            getSongUrl(e){
-                // console.log(e.target.dataset.a);
-                /*在这获取音乐的url*/
-                // console.log(this.list[e.target.dataset.a].id);
-                var id=this.list[e.target.dataset.a].id;
-                /*跳转到播放器页面,并传递音乐文件id*/
-                /*this.$router.push({path:'/hotlist',query:{id}})*/
-                /*window.location.href="http://127.0.0.1:8080/#/player";*/
-
-                /*播放器vedio.src=音乐的url  --var id=this.$route.query.id*/
+            getSongUrl(i){
+                this.$store.state.currentMusicId=this.list[i].id;
+                this.$emit("emi",this.fnT_f);
             }
         },
         created(){
                 this.cla.mode1=true;
-                this.cla.mode2=false;
-                
+                this.cla.mode2=false;      
                 this.axios.get("http://localhost:3000/search/hot").then(result=>{
                     // console.log(result.data.result);
                     this.hots=result.data.result.hots;
-                    // console.log(this.hots);
-                    
+                    // console.log(this.hots);            
                 });
         },
         watch:{
             ScContent(){
-                // console.log(this.ScContent);
-                
+                // console.log(this.ScContent);    
                 if(this.ScContent==null||this.ScContent==""){
                     this.cla.mode1=true;
                     this.cla.mode2=false;
@@ -75,7 +70,7 @@
                     // console.log(this.cla.mode1);
                     this.tab="tab1"
                     this.axios.get("http://localhost:3000/search?keywords="+this.ScContent).then(result=>{
-                    // console.log(result.data.result.songs);
+                    console.log(result.data.result.songs);
                     this.list=result.data.result.songs;
                     this.listname=result.data.result.songs[0].name;
                 });
@@ -153,18 +148,19 @@ input[type=search]{
     height:26px;
     vertical-align: middle;
 }
+
 ul.searchList{
+    font-size:14px;
     list-style:none;
     margin:0;
     padding:0;
-
+    overflow: hidden;
 }
 ul.searchList>li{
     border-bottom:1px solid grey;
     width: 80%;
     margin: 0 auto;
     padding: 5px;
-    
 }
 ul.searchList>li>div{
     pointer-events: none;

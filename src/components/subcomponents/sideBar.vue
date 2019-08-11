@@ -67,7 +67,10 @@ export default {
      overflow: hidden;
      position:relative;
      font-size:14px;
+     position: absolute;
+     animation:ani .2s;
     }
+
     /* 遮罩 */
     .Mask{
      position:absolute;
@@ -76,7 +79,11 @@ export default {
      width:100%;
      height:100%;
      background:rgba(0, 0,0, 0.2)
-    
+    }
+
+   @keyframes ani{
+       from{left:-100%;}
+       to{left:0}
     }
     /* 左侧内容 */
     .content{

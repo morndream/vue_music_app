@@ -67,15 +67,15 @@ export default {
        if(this.scT_f){
          setTimeout(()=>{
            this.showOrHide.d_show=false;
-         this.showOrHide.d_hide=true;
+          this.showOrHide.d_hide=true;
          },50)
        }else{
          setTimeout(()=>{
-           console.log(this.scT_f);
+          //  console.log(this.scT_f);
          this.showOrHide.d_show=true;
          this.showOrHide.d_hide=false;
-         console.log(this.showOrHide.d_show);
-         console.log(this.showOrHide.d_hide);
+        //  console.log(this.showOrHide.d_show);
+        //  console.log(this.showOrHide.d_hide);
          },50)
        }
     },

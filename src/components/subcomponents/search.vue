@@ -41,7 +41,10 @@
                 // console.log(this.list); 
             },
             getSongUrl(i){
-                this.$store.state.currentMusicId=this.list[i].id;
+                 var newId=this.list[i].id;
+                this.$store.commit("UpdateCurrentMusicId",newId);
+                this.$store.commit("UpdataMusiclist",newId);
+                this.$store.state.Playing=true;
                 this.$emit("emi",this.fnT_f);
             }
         },
@@ -70,7 +73,7 @@
                     // console.log(this.cla.mode1);
                     this.tab="tab1"
                     this.axios.get("http://localhost:3000/search?keywords="+this.ScContent).then(result=>{
-                    console.log(result.data.result.songs);
+                    // console.log(result.data.result.songs);
                     this.list=result.data.result.songs;
                     this.listname=result.data.result.songs[0].name;
                 });
